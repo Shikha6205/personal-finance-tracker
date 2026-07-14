@@ -3,7 +3,9 @@ import AppReducer from './AppReducer';
 import axios from 'axios';
 
 // Your live Render backend URL
-const backendUrl = 'https://personal-finance-tracker-t8zv.onrender.com';
+//const backendUrl = 'https://personal-finance-tracker-t8zv.onrender.com';
+// Change this line at the top of GlobalState.js
+const backendUrl = 'http://localhost:5000';
 
 // Initial state
 const initialState = {
