@@ -2,6 +2,9 @@ import React, { createContext, useReducer } from 'react';
 import AppReducer from './AppReducer';
 import axios from 'axios';
 
+// Your live Render backend URL
+const backendUrl = 'https://personal-finance-tracker-t8zv.onrender.com';
+
 // Initial state
 const initialState = {
   transactions: [],
@@ -19,7 +22,7 @@ export const GlobalProvider = ({ children }) => {
   // Actions
   async function getTransactions() {
     try {
-      const res = await axios.get('/api/v1/transactions');
+      const res = await axios.get(`${backendUrl}/api/v1/transactions`);
 
       dispatch({
         type: 'GET_TRANSACTIONS',
@@ -28,14 +31,14 @@ export const GlobalProvider = ({ children }) => {
     } catch (err) {
       dispatch({
         type: 'TRANSACTION_ERROR',
-        payload: err.response.data.error
+        payload: err.response?.data?.error || 'Server Error'
       });
     }
   }
 
   async function deleteTransaction(id) {
     try {
-      await axios.delete(`/api/v1/transactions/${id}`);
+      await axios.delete(`${backendUrl}/api/v1/transactions/${id}`);
 
       dispatch({
         type: 'DELETE_TRANSACTION',
@@ -44,7 +47,7 @@ export const GlobalProvider = ({ children }) => {
     } catch (err) {
       dispatch({
         type: 'TRANSACTION_ERROR',
-        payload: err.response.data.error
+        payload: err.response?.data?.error || 'Server Error'
       });
     }
   }
@@ -57,7 +60,7 @@ export const GlobalProvider = ({ children }) => {
     }
 
     try {
-      const res = await axios.post('/api/v1/transactions', transaction, config);
+      const res = await axios.post(`${backendUrl}/api/v1/transactions`, transaction, config);
 
       dispatch({
         type: 'ADD_TRANSACTION',
@@ -66,7 +69,7 @@ export const GlobalProvider = ({ children }) => {
     } catch (err) {
       dispatch({
         type: 'TRANSACTION_ERROR',
-        payload: err.response.data.error
+        payload: err.response?.data?.error || 'Server Error'
       });
     }
   }
